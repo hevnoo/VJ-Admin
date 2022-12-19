@@ -1,0 +1,29 @@
+//Menu
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: $menuWidth;
+    min-height: 100vh;
+    // min-height: calc(100vh - 50px);
+}
+.el-menu--collapse{
+    min-height: 100vh;
+}
+.logo{
+    width: 99.5%;
+    height: $headHeight;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $menuBg;
+    // background-color: #202a40;
+    border-bottom:  1px solid rgba(250, 250, 250, 0.1);;
+    img{
+        width: 35px;
+        height: 35px;
+        border-radius: 100%;
+    }
+    .logo-name{
+        color: #fff;
+        margin-left: 10px;
+        white-space:nowrap;//禁止自动换行
+    }
+}

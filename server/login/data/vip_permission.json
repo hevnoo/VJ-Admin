@@ -1,0 +1,120 @@
+[
+  {
+    "id": "0",
+    "name": "home",
+    "path": "/home",
+    "redirect":"",
+    "component":"/home/index.vue",
+    "meta":{
+      "title":"首页",
+      "icon": "HomeFilled"
+    }
+  },
+  {
+    "id": "1",
+    "name": "goods",
+    "path": "/goods",
+    "component":"/goods/index.vue",
+    "meta":{
+      "title":"产品管理",
+      "icon": "Goods"
+    },
+    "children": [
+      {
+        "id": "1 - 1",
+        "name": "goodsList",
+        "path": "/goods/goodsList",
+        "component":"/goods/goodsList/index.vue",
+        "meta":{
+          "title":"产品列表",
+          "icon": "List"
+        }
+      },
+      {
+        "id": "1 - 2",
+        "name": "category",
+        "path": "/goods/category",
+        "component":"/goods/category/index.vue",
+        "meta":{
+          "title":"产品分类",
+          "icon": "Grid"
+        }
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "orders",
+    "path": "/orders",
+    "component":"/orders/index.vue",
+    "meta":{
+      "title":"订单管理",
+      "icon": "Document"
+    },
+    "children": [
+      {
+        "id": "2 - 1",
+        "name": "orderList",
+        "path": "/orders/orderList",
+        "component":"/orders/orderList/index.vue",
+        "meta":{
+          "title":"订单列表",
+          "icon": "List"
+        }
+      },
+      {
+        "id": "2 - 2",
+        "name": "collect",
+        "path": "/orders/collect",
+        "component":"/orders/collect/index.vue",
+        "meta":{
+          "title":"汇总清单",
+          "icon": "Tickets"
+        }
+      },
+      {
+        "id": "2 - 3",
+        "name": "auditing",
+        "path": "/orders/auditing",
+        "component":"/orders/auditing/index.vue",
+        "meta":{
+          "title":"订单审核",
+          "icon": "Filter"
+        }
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "name": "class",
+    "path": "/class",
+    "component":"/class/index.vue",
+    "meta":{
+      "title":"产品分类",
+      "icon": "Menu"
+    },
+    "children": [
+      {
+        "id": "3 - 1",
+        "name": "list",
+        "path": "/class/list",
+        "component":"/class/list/index.vue",
+        "meta":{
+          "title":"产品列表",
+          "icon": "List"
+        }
+      },
+      {
+        "id": "3 - 2",
+        "name": "manage",
+        "path": "/class/manage",
+        "component":"/class/manage/index.vue",
+        "meta":{
+          "title":"分类管理",
+          "icon": "Grid"
+        }
+      }
+    ]
+  }
+  
+]

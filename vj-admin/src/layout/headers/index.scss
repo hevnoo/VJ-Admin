@@ -1,0 +1,31 @@
+//Headers
+.wrapper-header {
+    height: $headHeight;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .front {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    .switch {
+      display: flex;
+      align-items: center;
+      .el-icon {
+        font-size: 20px;
+        // margin-top: 2px;
+      }
+    }
+    .navBread {
+      margin-left: 15px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+  .back {
+    margin-right: 40px;
+    display: flex;
+    align-items: center;
+  }
+  
