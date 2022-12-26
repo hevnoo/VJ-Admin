@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 //全局引入icons
 import * as ELIcons from '@element-plus/icons-vue'
 import '@/styles/index.scss'
@@ -17,7 +18,10 @@ import echarts from '@/utils/echarts.js'
 const app = createApp(App)
 app.use(store)
 app.use(router)
-app.use(ElementPlus)
+// app.use(ElementPlus)
+app.use(ElementPlus, {
+  locale: zhCn
+})
 //全局使用icons
 for (let iconName in ELIcons) {
   app.component(iconName, ELIcons[iconName])

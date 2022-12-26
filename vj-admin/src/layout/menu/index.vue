@@ -49,11 +49,6 @@ const store = useStore()
 const route = useRoute()
 const router = useRouter()
 
-// const mark = computed(() => store.state.login.mark)
-// const getMenu = () => {
-//   store.dispatch('login/getMenuList', mark)
-// }
-// getMenu()
 const menuList = computed(() => store.state.login.menuList)
 const currentPath = ref(router.currentRoute.value.path)
 //收缩menu

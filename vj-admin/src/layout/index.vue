@@ -23,10 +23,15 @@
 import Menu from '@/layout/menu/index.vue'
 import Headers from '@/layout/headers/index.vue'
 import Footers from '@/layout/footers/index.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useStore } from 'vuex'
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'
+const route = useRoute()
+const router = useRouter()
+// console.log(router.options.routes)
 const store = useStore()
 const menuKeys = computed(() => store.state.keys.menuKeys)
+const menuList = computed(() => store.state.login.menuList)
 </script>
 
 <style lang="scss" scoped>

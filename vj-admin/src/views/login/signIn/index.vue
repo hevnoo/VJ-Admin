@@ -46,15 +46,18 @@ import {
   computed,
   watch,
   defineEmits,
-  getCurrentInstance
+  getCurrentInstance,
+  onBeforeUnmount
 } from 'vue'
-import { UserFilled, Lock } from '@element-plus/icons-vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'
 import { useStore } from 'vuex'
 import storage from '@/utils/storage'
+import { UserFilled, Lock } from '@element-plus/icons-vue'
 const store = useStore()
 const route = useRoute()
 const router = useRouter()
+// console.log(router.options.routes)
+// console.log(router.currentRoute.value.path)
 const emit = defineEmits(['isChangeView'])
 const isRegister = ref(false)
 const ruleForm = reactive({
@@ -83,10 +86,7 @@ const login = () => {
   formRef.value.validate(async (valid) => {
     if (valid) {
       store.dispatch('login/login', ruleForm)
-      setTimeout(() => {
-        location.reload()
-        //刷新是因为请求的menuList没有及时获取。
-      }, 100)
+      //   location.reload()
     } else {
       console.log('error submit!!')
       return false
@@ -98,32 +98,18 @@ const toRegister = () => {
   emit('isChangeView', isRegister.value)
 }
 
-const mark = computed(() => store.state.login.mark)
-const listenUser = watch(
-  mark,
-  (newVal, oldVal) => {
-    if (newVal) {
-      store.dispatch('login/getMenuList', mark)
-    }
-  },
-  { immediate: true, deep: true }
-)
-//
-// const currentInstance = getCurrentInstance()
-// const { $request } = currentInstance.appContext.config.globalProperties
-// const { proxy } = currentInstance
-// const requestLogin = async (data) => {
-//   await proxy
-//     .$request({
-//       url: '/api/users/login',
-//       methods: 'POST',
-//       data
-//     })
-//     .then((res) => {
-//       console.log(res)
-//     })
-// }
-//
+// watch(
+//   menuList,
+//   (newVal, oldVal) => {
+//   },
+//   { immediate: true, deep: true }
+// )
+onBeforeRouteLeave((to, from) => {
+  // console.log('组件路由离开前')
+})
+onBeforeUnmount(() => {
+  // console.log('组件销毁前')
+})
 </script>
 
 <style lang="scss" scoped>

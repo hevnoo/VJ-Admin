@@ -9,11 +9,8 @@ const expressJWT = require("express-jwt");
 const { PRIVATE_KEY } = require("./utils/constant");
 //
 var usersRouter = require("./routes/users");
-// var artRouter = require("./routes/article");
+var goodsRouter = require("./routes/goods");
 // var commentRouter = require("./routes/comment");
-// var labelRouter = require("./routes/label");
-// var userListRouter = require("./routes/userList");
-// var wordsRouter = require("./routes/words");
 
 var app = express();
 
@@ -37,18 +34,15 @@ app.use(
       "/api/users/menuList",
       "/api/users/register",
       "/api/users/login",
-      "/api/users/upload",
+      "/api/goods/upImg",
     ],
     //白名单,除了这里写的地址，其他的URL都需要验证
   })
 );
 
 app.use("/api/users", usersRouter);
-// app.use("/api/article", artRouter);
+app.use("/api/goods", goodsRouter);
 // app.use("/api/comment", commentRouter);
-// app.use("/api/label", labelRouter);
-// app.use("/api/userList", userListRouter);
-// app.use("/api/words", wordsRouter);
 
 //--------------------------
 // 捕获404并转发到错误处理程序

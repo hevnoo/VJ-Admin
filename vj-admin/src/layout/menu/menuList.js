@@ -1,18 +1,5 @@
 //停用，，被后端传过来的数据代替！
-import {
-  HomeFilled,
-  Goods,
-  Document,
-  List,
-  Grid,
-  Tickets,
-  Filter,
-  Menu,
-  Setting,
-  UserFilled,
-  OfficeBuilding
-} from '@element-plus/icons-vue'
-import { ref, reactive } from 'vue'
+import { HomeFilled, Goods } from '@element-plus/icons-vue'
 
 export function getMenuList() {
   const menuList = [

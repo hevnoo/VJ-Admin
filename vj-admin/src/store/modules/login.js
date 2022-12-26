@@ -24,6 +24,7 @@ export default {
     menuList(state, val) {
       state.menuList = val
       storage.setItem('menuList', val)
+      router.replace('/')
     }
   },
   actions: {
@@ -49,13 +50,22 @@ export default {
         loginApi(val)
           .then((res) => {
             if (res.data.status === 200) {
-              console.log('登录成功action:', res)
+              console.log('vuex:', res.data.msg)
               context.commit('setMark', res.data.mark.user_mark)
               context.commit('setToken', res.data.token)
+              //
+              menuList(res.data.mark.user_mark)
+                .then((res) => {
+                  if (res.data.status === 200) {
+                    context.commit('menuList', res.data.data)
+                  }
+                })
+                .catch((err) => {
+                  console.log(err)
+                })
+              //
               setTokenTime()
-              setTimeout(() => {
-                router.replace('/')
-              }, 500)
+              // router.replace('/')
               resolve() //resolve可不要,因为promise只是用来修饰异步。
             } else {
               console.log('登录失败', res.data.msg)
@@ -84,14 +94,11 @@ export default {
     // 退出
     logout({ commit }) {
       commit('setToken', '')
-      storage.removeItem('token')
       commit('setMark', '')
-      storage.removeItem('mark')
       commit('menuList', [])
-      storage.removeItem('menuList')
-      storage.removeItem('tokenTime')
-      // storage.setItem('menuList', [])
-      storage.removeItem_s('name')
+      localStorage.clear()
+      //清空所有
+      sessionStorage.clear()
       storage.setItem('lang', 'zh')
       router.replace('/login')
     }

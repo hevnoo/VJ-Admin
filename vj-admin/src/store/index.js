@@ -3,6 +3,7 @@ import login from '@/store/modules/login'
 import getters from '@/store/modules/getters'
 import keys from '@/store/modules/keys'
 import appSwitch from '@/store/modules/appSwitch'
+import goods from '@/store/modules/goods'
 
 export default createStore({
   state: {},
@@ -13,6 +14,7 @@ export default createStore({
     login,
     getters,
     keys,
-    appSwitch
+    appSwitch,
+    goods
   }
 })

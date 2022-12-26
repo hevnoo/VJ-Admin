@@ -3,7 +3,8 @@ export default {
   namespaced: true,
   state: {
     breadKeys: 1,
-    menuKeys: 1
+    menuKeys: 1,
+    dialogKeys: 1
   },
   getters: {},
   actions: {},
@@ -15,6 +16,10 @@ export default {
     changeMenuKeys(state, val) {
       //menu
       state.menuKeys = ++val
+    },
+    changeDialogKeys(state, val) {
+      //menu
+      state.dialogKeys = ++val
     }
   }
 }
