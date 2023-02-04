@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkvj_admin"]=self["webpackChunkvj_admin"]||[]).push([[237],{89:function(n,t){t.Z=(n,t)=>{const r=n.__vccOpts||n;for(const[e,u]of t)r[e]=u;return r}},3237:function(n,t,r){r.r(t),r.d(t,{default:function(){return i}});var e=r(3396);function u(n,t){return(0,e.wg)(),(0,e.iD)("div",null,"Department")}var c=r(89);const a={},f=(0,c.Z)(a,[["render",u]]);var i=f}}]);
+//# sourceMappingURL=237.ed112820.js.map

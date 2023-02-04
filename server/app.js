@@ -10,6 +10,9 @@ const { PRIVATE_KEY } = require("./utils/constant");
 //
 var usersRouter = require("./routes/users");
 var goodsRouter = require("./routes/goods");
+var classRouter = require("./routes/class");
+var ordersRouter = require("./routes/orders");
+var homeRouter = require("./routes/home");
 // var commentRouter = require("./routes/comment");
 
 var app = express();
@@ -42,6 +45,9 @@ app.use(
 
 app.use("/api/users", usersRouter);
 app.use("/api/goods", goodsRouter);
+app.use("/api/class", classRouter);
+app.use("/api/orders", ordersRouter);
+app.use("/api/home", homeRouter);
 // app.use("/api/comment", commentRouter);
 
 //--------------------------

@@ -30,18 +30,22 @@ const route = useRoute()
 const router = useRouter()
 
 const total = computed(() => store.state.goods.total)
-const currentPage = computed(() => store.state.goods.currentPage)
-storage.setItem_s('goodsPage', currentPage.value)
+//初次加载就在本地加入页码
+const currentPage = computed(() => store.state.appSwitch.currentPage)
+storage.setItem_s('page', currentPage.value)
+//初始化加载列表数据
 const getGoodsList = () => {
   store.dispatch('goods/getGoodsList', currentPage.value)
 }
 setTimeout(() => {
   getGoodsList()
-}, 500)
+}, 300)
 
 const goodsList = computed(() => store.state.goods.goodsList)
+//离开组件时将初始化分页。
 onBeforeRouteLeave((to, from) => {
-  storage.removeItem_s('goodsPage')
+  storage.removeItem_s('page')
+  store.commit('appSwitch/changePage', 1)
 })
 // const currentPath = ref(router.currentRoute.value.path)
 // watch(

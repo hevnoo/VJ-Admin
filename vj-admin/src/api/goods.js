@@ -59,6 +59,7 @@ const upImgApi = () => {
     method: 'POST'
   })
 }
+//与订单响应的库存更新。
 
 export {
   addGoodsApi,

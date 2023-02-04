@@ -1,8 +1,76 @@
 <template>
   <!-- 订单清单 -->
-  <div>Collect</div>
+  <div class="wrapper-collect" v-show="collectList">
+    <header class="header">
+      <span class="logo">汇总清单：</span>
+    </header>
+    <main class="collectTable">
+      <collectTable></collectTable>
+    </main>
+    <footer class="page">
+      <Pages></Pages>
+    </footer>
+  </div>
 </template>
 
-<script setup></script>
+<script setup>
+import collectTable from '@/views/orders/collect/collectTable/index.vue'
+import Pages from '@/components/pages/index.vue'
+import { ref, reactive, computed, watch, onMounted } from 'vue'
+import {
+  useRoute,
+  useRouter,
+  onBeforeRouteLeave,
+  onBeforeRouteUpdate
+} from 'vue-router'
+import { useStore } from 'vuex'
+import storage from '@/utils/storage.js'
+const store = useStore()
+const route = useRoute()
+const router = useRouter()
 
-<style lang="scss" scoped></style>
+//初次加载就在本地加入页码
+const currentPage = computed(() => store.state.appSwitch.currentPage)
+storage.setItem_s('page', currentPage.value)
+const aa = () => {
+  store.dispatch('order/getCollect', currentPage.value)
+}
+setTimeout(() => {
+  aa()
+}, 200)
+const collectList = computed(() => store.state.order.collectList)
+//离开组件时将初始化分页。
+onBeforeRouteLeave((to, from) => {
+  storage.removeItem_s('page')
+  store.commit('appSwitch/changePage', 1)
+})
+//
+const info = reactive({
+  page: currentPage.value || 1
+})
+watch(currentPage, (newVal, oldVal) => {
+  if (newVal !== oldVal) {
+    store.dispatch('order/getCollect', currentPage.value)
+  }
+})
+</script>
+
+<style lang="scss" scoped>
+.wrapper-collect {
+  margin-top: 10px;
+}
+.header {
+  margin-bottom: 10px;
+  margin-left: 4px;
+  .logo {
+    font-size: 18px;
+    font-weight: 520;
+  }
+}
+.page {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+}
+</style>

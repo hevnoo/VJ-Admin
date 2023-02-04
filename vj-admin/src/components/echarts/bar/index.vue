@@ -3,20 +3,24 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, inject } from 'vue'
+import { ref, reactive, computed, onMounted, inject, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 const store = useStore()
 const route = useRoute()
 const router = useRouter()
+const aa = () => {
+  store.dispatch('home/getOrderNumber')
+}
+aa()
+const orderNumber = computed(() => store.state.home.orderNumber)
 
 let echarts = inject('echarts') // 主要
-
 const change = () => {
-  const chartBox = echarts.init(document.getElementById('bar')) // 主要
+  const chartBox = echarts.init(document.getElementById('bar'))
   const option = {
     title: {
-      text: '柱状图'
+      text: '订单数量'
     },
     tooltip: {
       trigger: 'axis',
@@ -33,7 +37,7 @@ const change = () => {
     xAxis: [
       {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        data: ['春', '夏', '秋', '冬'],
         axisTick: {
           alignWithLabel: true
         }
@@ -49,7 +53,7 @@ const change = () => {
         name: 'Direct',
         type: 'bar',
         barWidth: '60%',
-        data: [10, 52, 200, 334, 390, 330, 220]
+        data: orderNumber.value
       }
     ]
   }
@@ -61,7 +65,15 @@ const change = () => {
 }
 
 onMounted(() => {
-  change()
+  // change()
+})
+
+watch(orderNumber, (val) => {
+  if (orderNumber.value) {
+    setTimeout(() => {
+      change()
+    }, 100)
+  }
 })
 </script>
 

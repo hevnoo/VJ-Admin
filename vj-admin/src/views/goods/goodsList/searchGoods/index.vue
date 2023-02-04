@@ -17,10 +17,12 @@
       placeholder="请选择分类"
       clearable
     >
-      <el-option label="零食" value="零食" />
-      <el-option label="饮料" value="饮料" />
-      <el-option label="生活用品" value="生活用品" />
-      <el-option label="文具" value="文具" />
+      <el-option
+        v-for="item in classList"
+        :key="item.id"
+        :label="item.className"
+        :value="item.className"
+      />
     </el-select>
   </div>
   <div class="item goodsName">
@@ -98,18 +100,19 @@ const form = reactive({
   goodsDescribe: ''
 })
 let isDialog = ref(false)
+const classList = computed(() => store.state.classes.classList)
 const eventMark = ref('searchGoods') //传事件标识，dialog子组件依据标识判断
-const currentPage = computed(() => store.state.goods.currentPage)
+const currentPage = computed(() => store.state.appSwitch.currentPage)
 let isSearch = ref(false) //标识是否是搜索状态，搜索状态就传页码到搜索请求。
 //搜索
 const search = () => {
-  store.commit('goods/changePage', 1)
+  // store.commit('goods/changePage', 1)
   if (!searchForm.date && !searchForm.goodsName && !searchForm.goodsClass) {
     isSearch.value = false
     store.dispatch('goods/getGoodsList', currentPage.value)
   } else {
     isSearch.value = true //开启搜索状态标识
-    searchForm.page = currentPage.value
+    searchForm.page = currentPage.value //添加page属性到searchForm
     store.dispatch('goods/getSearchGoods', searchForm)
     isSearch.value = false
   }
@@ -135,7 +138,7 @@ watch(
   currentPage,
   (newVal, oldVal) => {
     if (newVal !== oldVal) {
-      // console.log(newVal, oldVal)
+      //如果搜索状态标识为true，那么请求的是搜索列表，否则为默认数据列表。
       if (isSearch.value === true) {
         isSearch.value = false
         searchForm.page = currentPage.value

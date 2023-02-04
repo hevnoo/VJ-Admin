@@ -50,10 +50,10 @@ export default {
         loginApi(val)
           .then((res) => {
             if (res.data.status === 200) {
-              console.log('vuex:', res.data.msg)
+              // console.log('vuex:', res.data.msg)
               context.commit('setMark', res.data.mark.user_mark)
               context.commit('setToken', res.data.token)
-              //
+              //登录接口时自动请求对应的菜单
               menuList(res.data.mark.user_mark)
                 .then((res) => {
                   if (res.data.status === 200) {

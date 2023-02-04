@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkvj_admin"]=self["webpackChunkvj_admin"]||[]).push([[833],{3833:function(e,t,a){a.r(t),a.d(t,{default:function(){return n}});var s=a(3396),r={__name:"Test",setup(e){computed((()=>storage.getItem("pathName")?storage.getItem("pathName"):(storage.setItem("pathName",store.state.bread.pathName),console.log("---",storage.getItem("pathName")),store.state.bread.pathName)));return(e,t)=>((0,s.wg)(),(0,s.iD)("div"))}};const m=r;var n=m}}]);
+//# sourceMappingURL=833.656cc885.js.map

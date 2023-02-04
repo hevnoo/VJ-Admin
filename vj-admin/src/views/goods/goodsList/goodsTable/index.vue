@@ -45,12 +45,12 @@
       </template>
     </el-table-column>
   </el-table>
-  <!-- 批量删除 -->
+  <!-- 清空与批量删除 -->
   <div style="margin-top: 20px; margin-left: 15px">
     <el-button type="primary" @click="toggleSelection()">清空</el-button>
     <el-button @click="deleMore">批量删除</el-button>
   </div>
-  <!-- 弹框 -->
+  <!-- 添加或编辑弹框 -->
   <GoodsDialog
     :isDialog="isDialog"
     :form="form"
@@ -85,7 +85,7 @@ let form = reactive({
   goods_img: null,
   goodsDescribe: ''
 })
-const currentPage = computed(() => store.state.goods.currentPage)
+const currentPage = computed(() => store.state.appSwitch.currentPage)
 const goodsList = computed(() => store.state.goods.goodsList)
 
 //1.查看
@@ -111,18 +111,12 @@ const isDetail = (emi) => {
 }
 // const confirms = () => {
 //   store.dispatch('goods/updateGoods', form)
-//   setTimeout(() => {
-//     store.dispatch('goods/getGoodsList', currentPage.value)
-//   }, 500)
 //   isDialog.value = false
 // }
 //3.删除
 const handleDelete = (index, row) => {
   const currentId = { id: row.id }
   store.dispatch('goods/deleteGoods', currentId)
-  setTimeout(() => {
-    store.dispatch('goods/getGoodsList', currentPage.value)
-  }, 500)
 }
 //*监听并获取选中行的内容,以数组形式保存
 const SelectionChange = (val) => {}
@@ -136,9 +130,6 @@ const deleMore = () => {
     })
     const currentId = { id: idArr }
     store.dispatch('goods/deleteGoods', currentId)
-    setTimeout(() => {
-      store.dispatch('goods/getGoodsList', currentPage.value)
-    }, 500)
   } else {
     console.log('未选中')
   }

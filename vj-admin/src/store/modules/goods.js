@@ -16,7 +16,7 @@ export default {
     goodsList: [],
     total: 0,
     pageSize: 1,
-    currentPage: storage.getItem_s('goodsPage') || 1,
+    // currentPage: storage.getItem_s('goodsPage') || 1,
     goodsListId: []
   },
   getters: {},
@@ -26,10 +26,10 @@ export default {
       state.total = val.total
       state.pageSize = val.pageSize
     },
-    changePage(state, val) {
-      storage.setItem_s('goodsPage', val)
-      state.currentPage = val
-    },
+    // changePage(state, val) {
+    //   storage.setItem_s('goodsPage', val)
+    //   state.currentPage = val
+    // },
     // searchGoods(state, val) {
     //   state.goodsList = val.data
     //   state.total = val.total
@@ -72,7 +72,7 @@ export default {
           })
       })
     },
-    //获取对应ID商品列表，编辑按钮
+    //获取对应ID商品列表，编辑按钮,未启用
     getGoodsListId(context, val) {
       return new Promise((resolve, reject) => {
         goodsListIdApi(val)
@@ -96,6 +96,12 @@ export default {
             if (res.data.status === 200) {
               //   console.log('添加商品', res)
               ElMessage.success(res.data.msg)
+              //添加之后再请求完整数据
+              goodsListApi().then((res) => {
+                if (res.data.status === 200) {
+                  context.commit('setGoodsList', res.data)
+                }
+              })
               resolve()
             }
           })
@@ -112,6 +118,12 @@ export default {
             if (res.data.status === 200) {
               //   console.log(res.data.msg)
               ElMessage.success(res.data.msg)
+              //请求完整数据
+              goodsListApi().then((res) => {
+                if (res.data.status === 200) {
+                  context.commit('setGoodsList', res.data)
+                }
+              })
               resolve()
             }
           })
@@ -128,6 +140,12 @@ export default {
             if (res.data.status === 200) {
               //   console.log(res.data.msg)
               ElMessage.success(res.data.msg)
+              //请求完整数据
+              goodsListApi().then((res) => {
+                if (res.data.status === 200) {
+                  context.commit('setGoodsList', res.data)
+                }
+              })
               resolve()
             }
           })

@@ -43,13 +43,15 @@ router.post("/addGoods", async (req, res, next) => {
 // 获取商品列表，可分页, page:当前页，
 router.get("/goodsList", async (req, res, next) => {
   //   let page = Number(req.query.page || 1);
+  // let { page } = req.query;
   let { page } = req.query;
+  let pages = page || 1;
   try {
     let totalSql = "select id from goods";
     let t = await querySql(totalSql);
     let total = t.length;
     let pageSize = 7;
-    let pageSet = (page - 1) * pageSize;
+    let pageSet = (pages - 1) * pageSize;
     let sql = "select * from goods order by createDate desc limit ? offset ?";
     let result = await querySql(sql, [pageSize, pageSet]);
     res.send({

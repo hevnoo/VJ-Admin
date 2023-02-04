@@ -1,9 +1,11 @@
 import { createStore } from 'vuex'
 import login from '@/store/modules/login'
-import getters from '@/store/modules/getters'
 import keys from '@/store/modules/keys'
 import appSwitch from '@/store/modules/appSwitch'
 import goods from '@/store/modules/goods'
+import classes from '@/store/modules/classes'
+import order from '@/store/modules/order'
+import home from '@/store/modules/home'
 
 export default createStore({
   state: {},
@@ -12,9 +14,11 @@ export default createStore({
 
   modules: {
     login,
-    getters,
     keys,
     appSwitch,
-    goods
+    goods,
+    classes,
+    order,
+    home
   }
 })

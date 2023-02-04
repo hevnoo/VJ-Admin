@@ -17,7 +17,7 @@
         />
       </el-form-item>
       <el-form-item label="商品数量">
-        <el-input-number v-model="props.form.goodsNumber" :step="2" />
+        <el-input-number v-model="props.form.goodsNumber" :step="1" />
       </el-form-item>
       <el-form-item label="商品价格">
         <el-input-number
@@ -32,10 +32,12 @@
           placeholder="请选择分类"
           clearable
         >
-          <el-option label="零食" value="零食" />
-          <el-option label="饮料" value="饮料" />
-          <el-option label="生活用品" value="生活用品" />
-          <el-option label="文具" value="文具" />
+          <el-option
+            v-for="item in classList"
+            :key="item.id"
+            :label="item.className"
+            :value="item.className"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="商品图片">
@@ -113,6 +115,7 @@ let props = defineProps({
   form: Object,
   eventMark: String
 })
+const classList = computed(() => store.state.classes.classList)
 const currentPage = computed(() => store.state.goods.currentPage)
 
 //图片
@@ -142,14 +145,14 @@ const confirm = () => {
     //根据标识区分父组件
     if (props.eventMark === 'searchGoods') {
       store.dispatch('goods/addGoods', props.form)
-      setTimeout(() => {
-        store.dispatch('goods/getGoodsList', currentPage.value)
-      }, 500)
+      // setTimeout(() => {
+      //   store.dispatch('goods/getGoodsList', currentPage.value)
+      // }, 500)
     } else if (props.eventMark === 'goodsTable') {
       store.dispatch('goods/updateGoods', props.form)
-      setTimeout(() => {
-        store.dispatch('goods/getGoodsList', currentPage.value)
-      }, 500)
+      // setTimeout(() => {
+      //   store.dispatch('goods/getGoodsList', currentPage.value)
+      // }, 500)
     } else {
       console.log('未知的事件标识')
     }
