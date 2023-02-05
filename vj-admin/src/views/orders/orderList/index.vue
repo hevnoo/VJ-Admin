@@ -34,11 +34,11 @@ const router = useRouter()
 const currentPage = computed(() => store.state.appSwitch.currentPage)
 storage.setItem_s('page', currentPage.value)
 //初始化加载列表数据
-const getList = () => {
+const aa = () => {
   store.dispatch('order/getOrder', currentPage.value)
 }
 setTimeout(() => {
-  getList()
+  aa()
 }, 300)
 const orderList = computed(() => store.state.order.orderList)
 //离开组件时将初始化分页。

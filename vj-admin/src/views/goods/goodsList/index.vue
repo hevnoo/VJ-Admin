@@ -34,11 +34,11 @@ const total = computed(() => store.state.goods.total)
 const currentPage = computed(() => store.state.appSwitch.currentPage)
 storage.setItem_s('page', currentPage.value)
 //初始化加载列表数据
-const getGoodsList = () => {
+const aa = () => {
   store.dispatch('goods/getGoodsList', currentPage.value)
 }
 setTimeout(() => {
-  getGoodsList()
+  aa()
 }, 300)
 
 const goodsList = computed(() => store.state.goods.goodsList)

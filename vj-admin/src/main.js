@@ -14,6 +14,7 @@ import i18n from '@/i18n'
 import request from '@/utils/request.js'
 import '@/router/permission'
 import echarts from '@/utils/echarts.js'
+import directives from '@/directives/index'
 
 const app = createApp(App)
 app.use(store)
@@ -29,5 +30,6 @@ for (let iconName in ELIcons) {
 app.use(i18n)
 app.config.globalProperties.$request = request //方法挂载到全局
 app.config.globalProperties.$echarts = echarts
+app.use(directives)
 
 app.mount('#app')
