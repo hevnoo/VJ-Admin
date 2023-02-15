@@ -15,7 +15,7 @@ export default {
     list: 'list',
     manage: 'manage',
     roles: 'roles',
-    department: 'department',
+    pagePermission: 'pagePermission',
     personal: 'personal',
     logout: 'logout'
   },

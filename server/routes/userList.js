@@ -1,51 +1,92 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-const querySql = require('../db/index')
-
+const querySql = require("../db/index");
 
 //增加用户列表
-router.post('/addUserList', async(req, res, next) => {
-    let {head_img,nickname,usernames} = req.body
-    let { username } = req.user
-    try {
-        let user = await querySql('select * from userList where username = ?', [username])
-        if (!user || user.length === 0) {
-            let sql = 'insert into userList(head_img,nickname,username) values(?,?,?)'
-            await querySql(sql, [head_img,nickname,username])
-            res.send({ code: 0, msg: '新增成功', data: null })
-        }else{
-            res.send({ code: -1, msg: '该账号已注册' })
-        }   
-    } catch (e) {
-        console.log(e)
-        next(e)
+router.post("/addUser", async (req, res, next) => {
+  let { username, password, nickname, role } = req.body;
+  try {
+    let user = await querySql("select * from users where username = ?", [
+      username,
+    ]);
+    if (!user || user.length === 0) {
+      if (username === "admin" || role === "admin") {
+        let role = "admin";
+        let sql =
+          "insert into users(username,password,nickname,role) values(?,?,?,?)";
+        await querySql(sql, [username, password, nickname, role]);
+        res.send({ status: 200, msg: "新增成功", data: null });
+      }
+      //   else if (role === "admin") {
+      //     let sql =
+      //       "insert into users(username,password,nickname,role) values(?,?,?,?)";
+      //     await querySql(sql, [username, password, nickname, role]);
+      //     res.send({ status: 200, msg: "新增成功", data: null });
+      //   }
+      else {
+        let role = "vip";
+        let sql =
+          "insert into users(username,password,nickname,role) values(?,?,?,?)";
+        await querySql(sql, [username, password, nickname, role]);
+        res.send({ status: 200, msg: "新增成功", data: null });
+      }
+    } else {
+      res.send({ status: 400, msg: "该用户已存在" });
     }
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
 });
 //获取用户列表
-router.get('/userList', async(req, res, next) => {
-    try {
-        let sql = 'select id,head_img,nickname,username from userList'
-        let result = await querySql(sql)
-        res.send({ code: 0, msg: '获取成功', data: result })
-    } catch (e) {
-        console.log(e)
-        next(e)
-    }
+router.get("/getUser", async (req, res, next) => {
+  try {
+    let sql = "select * from users";
+    let result = await querySql(sql);
+    res.send({ status: 200, msg: "获取成功", data: result });
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
 });
 //更新用户列表信息接口
-router.post('/upUserList', async(req, res, next) => {
-    let {head_img,nickname} = req.body
-    let { username } = req.user
-    try {
-        let sql = 'update userList set head_img=?,nickname=? where username=?'
-        let result = await querySql(sql, [head_img,nickname,username])
-        res.send({ code: 0, msg: '更新成功', data: null })
-    } catch (e) {
-        console.log(e)
-        next(e)
+router.post("/upUser", async (req, res, next) => {
+  let { username, password, nickname, role } = req.body;
+  try {
+    let user = await querySql("select * from users where username = ?", [
+      username,
+    ]);
+    if (username === "admin" || role === "admin") {
+      let role = "admin";
+      let sql =
+        "update users set nickname=?,password=?,role=? where username=?";
+      let result = await querySql(sql, [nickname, password, role, username]);
+      res.send({ status: 200, msg: "更新成功", data: null });
     }
+
+    // if (!user || user.length === 0) {
+    //   let sql = "update users set nickname=?,password=? where username=?";
+    //   let result = await querySql(sql, [nickname, password, username]);
+    //   res.send({ status: 200, msg: "更新成功", data: null });
+    // } else {
+    //   res.send({ status: 400, msg: "该用户已存在" });
+    // }
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
 });
-
-
+//删除用户
+router.post("/deleUser", async (req, res, next) => {
+  let { id } = req.body;
+  try {
+    let sql = "delete from users where id = ? ";
+    let result = await querySql(sql, [id]);
+    res.send({ status: 200, msg: "删除成功", data: null });
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+});
 
 module.exports = router;

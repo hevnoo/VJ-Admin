@@ -9,7 +9,7 @@
     :router="true"
   >
     <header class="logo">
-      <img src="@/assets/logo.png" alt="" />
+      <img src="@/assets/img/head/aHeader.png" alt="" />
       <div class="logo-name" v-if="!isClose">{{ $t('menu.logo') }}</div>
     </header>
     <template v-for="(item, index) in menuList" :key="item.id">

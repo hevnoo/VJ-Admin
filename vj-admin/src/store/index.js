@@ -6,6 +6,7 @@ import goods from '@/store/modules/goods'
 import classes from '@/store/modules/classes'
 import order from '@/store/modules/order'
 import home from '@/store/modules/home'
+import userList from '@/store/modules/userList'
 
 export default createStore({
   state: {},
@@ -19,6 +20,7 @@ export default createStore({
     goods,
     classes,
     order,
-    home
+    home,
+    userList
   }
 })

@@ -15,7 +15,7 @@ export default {
     list: '产品列表',
     manage: '分类管理',
     roles: '角色管理',
-    department: '部门管理',
+    pagePermission: '页面权限',
     personal: '个人主页',
     logout: '退出登录'
   },

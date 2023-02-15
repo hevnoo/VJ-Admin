@@ -8,7 +8,7 @@ export default {
   namespaced: true,
   state: {
     token: storage.getItem('token') || '',
-    mark: storage.getItem('mark') || '',
+    role: storage.getItem('role') || '',
     menuList: storage.getItem('menuList') || []
   },
   getters: {},
@@ -17,9 +17,9 @@ export default {
       state.token = val
       storage.setItem('token', val)
     },
-    setMark(state, val) {
-      state.mark = val
-      storage.setItem('mark', val)
+    setRole(state, val) {
+      state.role = val
+      storage.setItem('role', val)
     },
     menuList(state, val) {
       state.menuList = val
@@ -34,7 +34,6 @@ export default {
         menuList(val)
           .then((res) => {
             if (res.data.status === 200) {
-              // console.log('获取menu成功', res.data)
               context.commit('menuList', res.data.data)
               resolve()
             }
@@ -50,11 +49,11 @@ export default {
         loginApi(val)
           .then((res) => {
             if (res.data.status === 200) {
-              // console.log('vuex:', res.data.msg)
-              context.commit('setMark', res.data.mark.user_mark)
+              context.commit('setRole', res.data.role)
               context.commit('setToken', res.data.token)
+              resolve()
               //登录接口时自动请求对应的菜单
-              menuList(res.data.mark.user_mark)
+              menuList(res.data.role)
                 .then((res) => {
                   if (res.data.status === 200) {
                     context.commit('menuList', res.data.data)
@@ -66,7 +65,7 @@ export default {
               //
               setTokenTime()
               // router.replace('/')
-              resolve() //resolve可不要,因为promise只是用来修饰异步。
+              resolve()
             } else {
               console.log('登录失败', res.data.msg)
             }
@@ -94,7 +93,7 @@ export default {
     // 退出
     logout({ commit }) {
       commit('setToken', '')
-      commit('setMark', '')
+      commit('setRole', '')
       commit('menuList', [])
       localStorage.clear()
       //清空所有

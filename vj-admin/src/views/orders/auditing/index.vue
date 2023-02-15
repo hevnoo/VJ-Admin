@@ -45,7 +45,7 @@ const fun = () => {
 }
 .input {
   width: 40%;
-  height: 45px;
+  height: 40px;
 }
 .btn {
   width: 6%;

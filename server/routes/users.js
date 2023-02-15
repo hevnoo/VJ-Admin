@@ -7,22 +7,22 @@ const { md5, upload } = require("../utils/index");
 const jwt = require("jsonwebtoken");
 // const menuList = require("../data/menuList.json");
 //引入身份标识与对应的展示内容
-const adminLogin = require("../login/data/admin_login.json");
+const rolesList = require("../login/data/rolesList.json");
+// const adminLogin = require("../login/data/admin_login.json");
+// const vipLogin = require("../login/data/vip_login.json");
 const adminPermission = require("../login/data/admin_permission.json");
-const vipLogin = require("../login/data/vip_login.json");
 const vipPermission = require("../login/data/vip_permission.json");
 
 // 获取菜单列表
 router.get("/menuList", (req, res, next) => {
-  let mark = req.query.mark;
+  let role = req.query.role;
   // let menu = menuList;
   try {
-    if (mark === "admin") {
+    if (role === "admin") {
       res.send({ status: 200, msg: "admin成功", data: adminPermission });
     } else {
       res.send({ status: 200, msg: "vip成功", data: vipPermission });
     }
-    // res.send({ status: 200, msg: "成功", data: menu });
   } catch (e) {
     console.log(e);
     next(e);
@@ -32,7 +32,6 @@ router.get("/menuList", (req, res, next) => {
 // 登录接口
 router.post("/login", async (req, res, next) => {
   let { username, password } = req.body;
-
   try {
     let user = await querySql("select * from users where username = ?", [
       username,
@@ -40,6 +39,11 @@ router.post("/login", async (req, res, next) => {
     if (!user || user.length === 0) {
       res.send({ status: 400, msg: "该账号不存在" });
     } else {
+      let roles = await querySql("select role from users where username = ?", [
+        username,
+      ]);
+      let role = roles[0].role;
+      // console.log("------------------", roles[0].role);
       let result = await querySql(
         "select * from users where username = ? and password = ?",
         [username, password]
@@ -51,20 +55,20 @@ router.post("/login", async (req, res, next) => {
         let token = jwt.sign({ username }, PRIVATE_KEY, {
           expiresIn: EXPIRESD,
         });
-        if (username === "admin") {
+        if (username === "admin" || role === "admin") {
           //分权限，如果是admin，那就发送admin的标识，，否则发普通vip标识。
           res.send({
             status: 200,
             msg: "登录成功",
             token: token,
-            mark: adminLogin,
+            role: role,
           });
         } else {
           res.send({
             status: 200,
             msg: "登录成功",
-            token: token,
-            mark: vipLogin,
+            token,
+            role,
           });
         }
       }
@@ -84,10 +88,21 @@ router.post("/register", async (req, res, next) => {
     ]);
     // 问号占位符，后面既是赋值给占位符。
     if (!user || user.length === 0) {
-      await querySql(
-        "insert into users(username,password,nickname) value(?,?,?)",
-        [username, password, nickname]
-      );
+      if (username === "admin") {
+        //账号或者角色 是管理员admin即可
+        let role = "admin";
+        await querySql(
+          "insert into users(username,password,nickname,role) value(?,?,?,?)",
+          [username, password, nickname, role]
+        );
+      } else {
+        let role = "vip";
+        await querySql(
+          "insert into users(username,password,nickname,role) value(?,?,?,?)",
+          [username, password, nickname, role]
+        );
+      }
+
       res.send({ status: 200, msg: "注册成功" });
     } else {
       res.send({ status: 400, msg: "该账号已注册" });

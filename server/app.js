@@ -13,6 +13,7 @@ var goodsRouter = require("./routes/goods");
 var classRouter = require("./routes/class");
 var ordersRouter = require("./routes/orders");
 var homeRouter = require("./routes/home");
+var userListRouter = require("./routes/userList");
 // var commentRouter = require("./routes/comment");
 
 var app = express();
@@ -48,6 +49,7 @@ app.use("/api/goods", goodsRouter);
 app.use("/api/class", classRouter);
 app.use("/api/orders", ordersRouter);
 app.use("/api/home", homeRouter);
+app.use("/api/userList", userListRouter);
 // app.use("/api/comment", commentRouter);
 
 //--------------------------

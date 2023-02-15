@@ -138,11 +138,11 @@
         },
         {
           "id": "4 - 2",
-          "name": "department",
-          "path": "/system/department",
-          "component":"/system/department/index.vue",
+          "name": "pagePermission",
+          "path": "/system/pagePermission",
+          "component":"/system/pagePermission/index.vue",
           "meta":{
-            "title":"部门管理",
+            "title":"页面权限",
             "icon": "OfficeBuilding"
           }
         }

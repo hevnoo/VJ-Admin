@@ -19,7 +19,10 @@ const getView = (val) => {
 .wrapper-login {
   width: 100%;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-image: url('@/assets/img/login/infinity-7096443.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;

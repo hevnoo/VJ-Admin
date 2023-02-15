@@ -24,7 +24,7 @@ const registerApi = (data) => {
 const menuList = (data) => {
   return request({
     url: 'api/users/menuList',
-    params: { mark: data }
+    params: { role: data }
   })
   //get请求传参，值要写在属性后面，还要把属性要写成与后端接收属性一样的！
 }
