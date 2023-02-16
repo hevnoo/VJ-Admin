@@ -39,6 +39,7 @@ app.use(
       "/api/users/register",
       "/api/users/login",
       "/api/goods/upImg",
+      "/api/users/upload",
     ],
     //白名单,除了这里写的地址，其他的URL都需要验证
   })

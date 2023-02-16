@@ -30,6 +30,7 @@ const route = useRoute()
 const router = useRouter()
 // console.log(router.options.routes)
 const store = useStore()
+
 const menuKeys = computed(() => store.state.keys.menuKeys)
 const menuList = computed(() => store.state.login.menuList)
 </script>

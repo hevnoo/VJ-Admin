@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <About class="about" v-if="userInfo"></About>
-    <Modify class="modify" v-if="userInfo"></Modify>
+    <Modify class="modify"></Modify>
     <!-- <section class="about" v-if="userInfo">
       <About></About>
     </section>

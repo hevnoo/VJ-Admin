@@ -86,29 +86,29 @@
   },
   {
     "id": "3",
-    "name": "class",
-    "path": "/class",
-    "component":"/class/index.vue",
-    "meta":{
-      "title":"产品分类",
-      "icon": "Menu"
+      "name": "module",
+      "path": "/module",
+      "component":"/module/index.vue",
+      "meta":{
+        "title":"模块管理",
+        "icon": "Menu"
     },
     "children": [
       {
         "id": "3 - 1",
-        "name": "list",
-        "path": "/class/list",
-        "component":"/class/list/index.vue",
+        "name": "personals",
+        "path": "/module/personals",
+        "component":"/module/personals/index.vue",
         "meta":{
-          "title":"产品列表",
+          "title":"个人中心",
           "icon": "List"
         }
       },
       {
         "id": "3 - 2",
         "name": "manage",
-        "path": "/class/manage",
-        "component":"/class/manage/index.vue",
+        "path": "/module/manage",
+        "component":"/module/manage/index.vue",
         "meta":{
           "title":"分类管理",
           "icon": "Grid"

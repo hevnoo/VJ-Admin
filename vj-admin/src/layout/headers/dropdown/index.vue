@@ -1,7 +1,11 @@
 <template>
   <el-dropdown>
     <span class="el-dropdown-link">
-      <img class="logo" src="@/assets/img/head/aHeader.png" alt="" />
+      <img
+        :src="userInfo.head_img ? userInfo.head_img : imgUrl"
+        alt=""
+        class="logo"
+      />
     </span>
     <template #dropdown>
       <el-dropdown-menu>
@@ -20,7 +24,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue'
+import imgUrl from '@/assets/img/head/aHeader.png'
+import { ref, reactive, onMounted, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import storage from '@/utils/storage'
@@ -28,6 +33,7 @@ const store = useStore()
 const route = useRoute()
 const router = useRouter()
 
+const userInfo = computed(() => store.state.login.userInfo)
 const breadKeys = computed(() => store.state.keys.breadKeys)
 const goPersonal = () => {
   storage.setItem_s('name', 'personal')

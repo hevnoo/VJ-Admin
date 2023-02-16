@@ -145,14 +145,8 @@ const confirm = () => {
     //根据标识区分父组件
     if (props.eventMark === 'searchGoods') {
       store.dispatch('goods/addGoods', props.form)
-      // setTimeout(() => {
-      //   store.dispatch('goods/getGoodsList', currentPage.value)
-      // }, 500)
     } else if (props.eventMark === 'goodsTable') {
       store.dispatch('goods/updateGoods', props.form)
-      // setTimeout(() => {
-      //   store.dispatch('goods/getGoodsList', currentPage.value)
-      // }, 500)
     } else {
       console.log('未知的事件标识')
     }

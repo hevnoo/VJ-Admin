@@ -1,4 +1,10 @@
-import { loginApi, registerApi, menuList } from '@/api/login'
+import {
+  loginApi,
+  registerApi,
+  menuList,
+  userInfoApi,
+  updateUserApi
+} from '@/api/login'
 import router from '@/router'
 //引入过期时间设置
 import { setTokenTime } from '@/utils/auth'
@@ -9,7 +15,8 @@ export default {
   state: {
     token: storage.getItem('token') || '',
     role: storage.getItem('role') || '',
-    menuList: storage.getItem('menuList') || []
+    menuList: storage.getItem('menuList') || [],
+    userInfo: null
   },
   getters: {},
   mutations: {
@@ -25,6 +32,9 @@ export default {
       state.menuList = val
       storage.setItem('menuList', val)
       router.replace('/')
+    },
+    setUserInfo(state, val) {
+      state.userInfo = val
     }
   },
   actions: {
@@ -81,8 +91,37 @@ export default {
         registerApi(val)
           .then((res) => {
             if (res.data.status === 200) {
-              console.log('注册成功', res.data.msg)
               ElMessage.success(res.data.msg)
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      })
+    },
+    //获取用户信息
+    userInfo(context, val) {
+      return new Promise((resolve, reject) => {
+        userInfoApi(val)
+          .then((res) => {
+            if (res.data.status === 200) {
+              context.commit('setUserInfo', res.data.data)
+              resolve()
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      })
+    },
+    //更新当前用户信息
+    updateUser(context, val) {
+      return new Promise((resolve, reject) => {
+        updateUserApi(val)
+          .then((res) => {
+            if (res.data.status === 200) {
+              ElMessage.success(res.data.msg)
+              resolve()
             }
           })
           .catch((err) => {

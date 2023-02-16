@@ -13,7 +13,7 @@
       <Driver></Driver>
       <ScreenFull></ScreenFull>
       <Lang></Lang>
-      <Dropdown></Dropdown>
+      <Dropdown v-if="userInfo"></Dropdown>
     </div>
   </div>
 </template>
@@ -36,6 +36,12 @@ const changeSwitch = () => {
   isClose.value = !isClose.value
   store.commit('appSwitch/change', isClose.value)
 }
+//初始化加载列表数据，获取用户信息
+const aa = () => {
+  store.dispatch('login/userInfo')
+}
+aa()
+const userInfo = computed(() => store.state.login.userInfo)
 </script>
 
 <style lang="scss" scoped>

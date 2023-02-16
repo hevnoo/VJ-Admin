@@ -113,17 +113,74 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
-//获取用户信息接口
+//获取当前用户信息
 router.get("/info", async (req, res, next) => {
   console.log("用户信息：", req.user);
   let { username } = req.user;
   try {
     //按用户名查找出对应的用户信息：
-    let userinfo = await querySql(
-      "select nickname,head_img,username from users where username = ?",
-      [username]
-    );
+    let userinfo = await querySql("select * from users where username = ?", [
+      username,
+    ]);
     res.send({ status: 200, msg: "成功", data: userinfo[0] });
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+});
+
+//更新用户当前信息
+router.post("/updateUser", async (req, res, next) => {
+  let { username, nickname } = req.body;
+  let { password, oldPass } = req.body;
+  let { head_img } = req.body;
+  let userSelf = req.user.username;
+  try {
+    let user = await querySql("select * from users where username = ?", [
+      username,
+    ]);
+    //1.头像
+    if (head_img && !username && !password) {
+      let result = await querySql(
+        "update users set head_img = ? where username = ?",
+        [head_img, userSelf]
+      );
+      res.send({ status: 200, msg: "更新头像成功", data: null });
+    }
+    //2.账户
+    else if (username && nickname && !password && !oldPass) {
+      if (!user || user.length === 0) {
+        let result = await querySql(
+          "update users set nickname = ?,username = ? where username = ?",
+          [nickname, username, userSelf]
+        );
+        res.send({ status: 200, msg: "更新账户成功", data: null });
+      } else {
+        res.send({ status: 400, msg: "该账号已存在" });
+      }
+      //3.密码
+    } else if (!username && !nickname && password && oldPass) {
+      //先找原密码是否正确
+      let isPass = await querySql(
+        "select password from users where username = ? ",
+        [userSelf]
+      );
+      //再找新旧密码是否相同
+      // console.log("--------------------", isPass[0].password);
+      if (oldPass === isPass[0].password) {
+        if (isPass[0].password === password) {
+          res.send({ status: 400, msg: "新旧密码不能相同", data: null });
+        } else {
+          let result = await querySql(
+            "update users set password = ? where username = ?",
+            [password, userSelf]
+          );
+          res.send({ status: 200, msg: "更新密码成功", data: null });
+        }
+      } else {
+        res.send({ status: 400, msg: "原密码不正确", data: null });
+      }
+    }
   } catch (e) {
     console.log(e);
     next(e);
@@ -134,25 +191,25 @@ router.get("/info", async (req, res, next) => {
 router.post("/upload", upload.single("head_img"), async (req, res, next) => {
   console.log("头像接口请求文件", req.file);
   let imgPath = req.file.path.split("public")[1];
-  let imgUrl = "http://127.0.0.1:3000" + imgPath;
+  let imgUrl = "http://127.0.0.1:7171" + imgPath;
   res.send({ status: 200, msg: "上传成功", data: imgUrl });
 });
 
-//用户信息更新接口
-router.post("/updateUser", async (req, res, next) => {
-  let { nickname, head_img } = req.body;
-  let { username } = req.user;
-  try {
-    let result = await querySql(
-      "update users set nickname = ?,head_img = ? where username = ?",
-      [nickname, head_img, username]
-    );
-    console.log(result);
-    res.send({ status: 200, msg: "更新成功", data: null });
-  } catch (e) {
-    console.log(e);
-    next(e);
-  }
-});
+// //用户信息更新接口
+// router.post("/updateUser", async (req, res, next) => {
+//   let { nickname, head_img } = req.body;
+//   let { username } = req.user;
+//   try {
+//     let result = await querySql(
+//       "update users set nickname = ?,head_img = ? where username = ?",
+//       [nickname, head_img, username]
+//     );
+//     console.log(result);
+//     res.send({ status: 200, msg: "更新成功", data: null });
+//   } catch (e) {
+//     console.log(e);
+//     next(e);
+//   }
+// });
 
 module.exports = router;
