@@ -172,11 +172,15 @@ const saveImg = () => {
   font-size: 15px;
   color: rgb(0, 0, 0, 0.65);
 }
-//上传图片
+//上传图片--------
 .avatar-uploader .avatar {
   width: 100px;
   height: 100px;
   border-radius: 100%;
   display: block;
+}
+//去掉图片边框
+::v-deep .avatar-uploader .el-upload {
+  border: 0 !important;
 }
 </style>

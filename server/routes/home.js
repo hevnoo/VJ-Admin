@@ -73,7 +73,7 @@ router.get("/dateMoney", async (req, res, next) => {
       }
       list.push(rr);
     });
-    setTimeout(() => {
+    await setTimeout(() => {
       res.send({
         status: 200,
         msg: "获取成功",

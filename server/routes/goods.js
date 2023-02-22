@@ -83,6 +83,7 @@ router.get("/goodsListId", async (req, res, next) => {
 //获取搜索商品
 router.get("/searchGoods", async (req, res, next) => {
   let { page, goodsName, date, goodsClass } = req.query;
+  // page = page || 1;
   try {
     //先格式时间。
     let startTime = dayjs(date[0]).format("YYYY-MM-DD HH:mm:ss");
@@ -193,7 +194,7 @@ router.get("/searchGoods", async (req, res, next) => {
       let t = await querySql(totalSql, [goodsClass, "%" + goodsName + "%"]);
       let total = t.length;
       let sql =
-        "select * from goods where goodsClass = ? goodsName like ? order by createDate desc limit ? offset ?";
+        "select * from goods where goodsClass = ? and goodsName like ? order by createDate desc limit ? offset ?";
       let result = await querySql(sql, [
         goodsClass,
         "%" + goodsName + "%",

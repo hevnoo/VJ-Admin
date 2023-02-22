@@ -19,7 +19,8 @@ export default {
     total: 0,
     pageSize: 1,
     stock: 0,
-    collectList: []
+    collectList: [], //汇总清单
+    manageList: []
   },
   getters: {},
   mutations: {
@@ -34,6 +35,11 @@ export default {
     },
     setCollect(state, val) {
       state.collectList = val.data
+      state.total = val.total
+      state.pageSize = val.pageSize
+    },
+    setManage(state, val) {
+      state.manageList = val.data
       state.total = val.total
       state.pageSize = val.pageSize
     }
@@ -167,6 +173,21 @@ export default {
           .then((res) => {
             if (res.data.status === 200) {
               context.commit('setCollect', res.data)
+              resolve()
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      })
+    },
+    //出货清单，模块管理的分类管理。
+    getManage(context, val) {
+      return new Promise((resolve, reject) => {
+        getCollectApi(val)
+          .then((res) => {
+            if (res.data.status === 200) {
+              context.commit('setManage', res.data)
               resolve()
             }
           })

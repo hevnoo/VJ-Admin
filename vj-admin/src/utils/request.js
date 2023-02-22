@@ -14,6 +14,7 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     if (store.state.login.token && localStorage.getItem('token')) {
+      //是否登录超时diffTokenTime()
       if (diffTokenTime()) {
         store.dispatch('login/logout')
         return Promise.reject(new Error('客户端 token 时间失效了'))
